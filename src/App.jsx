@@ -43,7 +43,7 @@ const UI_COPY = {
     editionDescription:
       'Clear Uthmani script with side-by-side translation and durable gold-embossed binding.',
     insideSampleHeader: 'Inside Page Sample • Tarjuma: Fateh Muhammad Jalandhari',
-    formBadge: 'Official Request Form',
+    formBadge: 'Request Form',
     formHeading: 'Enter Your Details to Receive a Quran',
     shareBtn: 'Share Form',
     copiedBtn: 'Link Copied!',
@@ -68,7 +68,7 @@ const UI_COPY = {
     donatePrimaryCta: 'Complete Donor Form',
     donateSecondaryCta: 'Share This Mission',
     donateSharedMsg: 'Mission Link Copied!',
-    donorFormBadge: 'Official Donor Form',
+    donorFormBadge: 'Donor Form',
     donorFormHeading: 'Sponsor a Mushaf (Sadaqah Jariyah)',
     donorLoadingTitle: 'Loading Donor Form...',
     donorFormPrivacyNote:
@@ -126,7 +126,7 @@ const UI_COPY = {
     editionDescription:
       'واضح عثمانی رسم الخط، بالمقابل ترجمہ اور مضبوط سنہری نقش و نگار والی جلد۔',
     insideSampleHeader: 'اندرونی صفحے کا نمونہ • ترجمہ: فتح محمد جالندھری',
-    formBadge: 'سرکاری درخواست فارم',
+    formBadge: 'درخواست فارم',
     formHeading: 'قرآن پاک حاصل کرنے کے لیے اپنی تفصیلات درج کریں',
     shareBtn: 'فارم شیئر کریں',
     copiedBtn: 'لنک کاپی ہو گیا!',
@@ -151,7 +151,7 @@ const UI_COPY = {
     donatePrimaryCta: 'عطیہ فارم پُر کریں',
     donateSecondaryCta: 'مشن شیئر کریں',
     donateSharedMsg: 'مشن کا لنک کاپی ہو گیا!',
-    donorFormBadge: 'سرکاری عطیات فارم',
+    donorFormBadge: 'عطیات فارم',
     donorFormHeading: 'قرآن پاک کا نسخہ ہدیہ کریں (صدقہ جاریہ)',
     donorLoadingTitle: 'عطیات فارم لوڈ ہو رہا ہے...',
     donorFormPrivacyNote:
