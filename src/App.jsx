@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import IntroSplash from './components/IntroSplash.jsx';
 
 // Vite serves files in /public directly at the root URL
@@ -7,18 +7,26 @@ const DonateMissionImg = '/donate-mission.jpg';
 
 const REQUEST_FORM_VIEW_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSejb8t6n8Ueerspex4uf6swcg7AHybMlWZUA2rCo-Gf-sKr_g/viewform';
-const REQUEST_FORM_EMBED_URL = `${REQUEST_FORM_VIEW_URL}?embedded=true`;
 
 const DONOR_FORM_VIEW_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSfNiUCJB-pkqhM0ykO-AGffZrxzhWpivj1gSOs_Nba0AheXNg/viewform';
-const DONOR_FORM_EMBED_URL = `${DONOR_FORM_VIEW_URL}?embedded=true`;
 
 const LANGUAGE_STORAGE_KEY = 'get_a_quran_ui_lang';
+const PAGE_IDS = ['home', 'request', 'support-mission', 'about-us'];
+
+const getPageFromHash = () => {
+  if (typeof window === 'undefined') return 'home';
+  const hash = window.location.hash.slice(1);
+  if (hash === 'top') return 'home';
+  if (hash === 'request-form') return 'request';
+  return PAGE_IDS.includes(hash) ? hash : 'home';
+};
 
 const UI_COPY = {
   en: {
     brandName: 'Get a Quran',
     brandTagline: 'Free Hardcopy Initiative',
+    navHome: 'Home',
     navAbout: 'About Us',
     navDonate: 'Support Mission',
     navCta: 'Request a Quran',
@@ -36,6 +44,34 @@ const UI_COPY = {
       { value: 'Urdu & Eng', label: 'Authentic Translations' },
       { value: '48 Hours', label: 'Respectful Dispatch' },
     ],
+    homeOfferBadge: 'A Mushaf for your home',
+    homeOfferHeading: 'A clear copy, delivered with care',
+    homeOfferLead:
+      'Get a printed Quran with translation in a format that suits your reading. Every copy is prepared with care and sent to you free of charge.',
+    homeOfferPoints: [
+      'Clear Arabic text with Urdu translation',
+      'Standard, large-print, and pocket editions',
+      'No cost for the Quran or its delivery',
+    ],
+    homeProcessHeading: 'Getting your Quran is simple',
+    homeProcessLead: 'A few steps are all it takes to request your free copy.',
+    homeSteps: [
+      {
+        title: 'Send your request',
+        description: 'Share your details using the Quran request form.',
+      },
+      {
+        title: 'We prepare your copy',
+        description: 'Our volunteer team arranges your Quran with care.',
+      },
+      {
+        title: 'Receive it at home',
+        description: 'Your printed copy is delivered to you free of charge.',
+      },
+    ],
+    homeCtaHeading: 'Begin your Quran journey',
+    homeCtaLead: 'Request a printed copy in just a few minutes.',
+    homeAboutLink: 'Learn about our mission',
     bookTopLabel: 'The Noble Quran',
     bookTranslationLabel: 'Arabic + Urdu Translation',
     editionTitle: 'Standard Study Hardcover',
@@ -45,6 +81,7 @@ const UI_COPY = {
     insideSampleHeader: 'Inside Page Sample • Tarjuma: Fateh Muhammad Jalandhari',
     formBadge: 'Request Form',
     formHeading: 'Enter Your Details to Receive a Quran',
+    formLanguageLabel: 'Form language',
     shareBtn: 'Share Form',
     copiedBtn: 'Link Copied!',
     newTabBtn: 'New Tab',
@@ -70,6 +107,7 @@ const UI_COPY = {
     donateSharedMsg: 'Mission Link Copied!',
     donorFormBadge: 'Donor Form',
     donorFormHeading: 'Sponsor a Mushaf (Sadaqah Jariyah)',
+    donorFormLanguageLabel: 'Form language',
     donorLoadingTitle: 'Loading Donor Form...',
     donorFormPrivacyNote:
       'Your contribution details are submitted directly via our official form so our volunteer team can confirm receipt and dispatch copies.',
@@ -102,6 +140,7 @@ const UI_COPY = {
   ur: {
     brandName: 'قرآن حاصل کریں',
     brandTagline: 'مفت نسخہ قرآن مہم',
+    navHome: 'صفحۂ اول',
     navAbout: 'ہمارے بارے میں',
     navDonate: 'تعاون کریں',
     navCta: 'قرآن منگوائیں',
@@ -119,6 +158,34 @@ const UI_COPY = {
       { value: 'اردو و انگریزی', label: 'مستند تراجم کے ساتھ' },
       { value: '48 گھنٹے', label: 'ادب و احترام کے ساتھ ترسیل' },
     ],
+    homeOfferBadge: 'آپ کے گھر کے لیے قرآن پاک',
+    homeOfferHeading: 'واضح نسخہ، احترام کے ساتھ آپ تک',
+    homeOfferLead:
+      'اپنے مطالعے کے لیے مناسب انداز میں ترجمے کے ساتھ مطبوعہ قرآن پاک حاصل کریں۔ ہر نسخہ توجہ سے تیار کر کے آپ کو بالکل مفت بھیجا جاتا ہے۔',
+    homeOfferPoints: [
+      'واضح عربی متن کے ساتھ اردو ترجمہ',
+      'معیاری، بڑے حروف اور پاکٹ ایڈیشن',
+      'قرآن پاک اور ترسیل بالکل مفت',
+    ],
+    homeProcessHeading: 'قرآن حاصل کرنے کا آسان طریقہ',
+    homeProcessLead: 'مفت نسخہ حاصل کرنے کے لیے صرف چند آسان مراحل ہیں۔',
+    homeSteps: [
+      {
+        title: 'درخواست بھیجیں',
+        description: 'قرآن کی درخواست کے فارم میں اپنی تفصیلات درج کریں۔',
+      },
+      {
+        title: 'ہم نسخہ تیار کرتے ہیں',
+        description: 'ہماری رضاکار ٹیم آپ کا نسخہ توجہ اور احترام سے تیار کرتی ہے۔',
+      },
+      {
+        title: 'گھر پر وصول کریں',
+        description: 'مطبوعہ نسخہ آپ تک بالکل مفت پہنچایا جاتا ہے۔',
+      },
+    ],
+    homeCtaHeading: 'قرآن کے مطالعے کا آغاز کریں',
+    homeCtaLead: 'چند منٹ میں اپنے مطبوعہ نسخے کی درخواست دیں۔',
+    homeAboutLink: 'ہمارے مشن کے بارے میں جانیں',
     bookTopLabel: 'القرآن الحکیم',
     bookTranslationLabel: 'عربی + اردو ترجمہ',
     editionTitle: 'معیاری مطالعاتی ہارڈ کور ایڈیشن',
@@ -128,6 +195,7 @@ const UI_COPY = {
     insideSampleHeader: 'اندرونی صفحے کا نمونہ • ترجمہ: فتح محمد جالندھری',
     formBadge: 'درخواست فارم',
     formHeading: 'قرآن پاک حاصل کرنے کے لیے اپنی تفصیلات درج کریں',
+    formLanguageLabel: 'فارم کی زبان',
     shareBtn: 'فارم شیئر کریں',
     copiedBtn: 'لنک کاپی ہو گیا!',
     newTabBtn: 'نیا ٹیب',
@@ -153,6 +221,7 @@ const UI_COPY = {
     donateSharedMsg: 'مشن کا لنک کاپی ہو گیا!',
     donorFormBadge: 'عطیات فارم',
     donorFormHeading: 'قرآن پاک کا نسخہ ہدیہ کریں (صدقہ جاریہ)',
+    donorFormLanguageLabel: 'فارم کی زبان',
     donorLoadingTitle: 'عطیات فارم لوڈ ہو رہا ہے...',
     donorFormPrivacyNote:
       'آپ کی تفصیلات براہِ راست ہمارے آفیشل فارم کے ذریعے جمع ہوتی ہیں تاکہ ہماری رضاکار ٹیم تصدیق کر کے آپ کی جانب سے نسخے روانہ کر سکے۔',
@@ -185,8 +254,8 @@ const UI_COPY = {
 };
 
 export const GetAQuran = () => {
-  const formSectionRef = useRef(null);
   const donorFormCardRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(getPageFromHash);
 
   const [uiLang, setUiLang] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -201,6 +270,17 @@ export const GetAQuran = () => {
     }
     return 'en';
   });
+  const [formLang, setFormLang] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const savedLang = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        if (savedLang === 'ur' || savedLang === 'en') return savedLang;
+      } catch {
+        // Use the default language if storage access is restricted.
+      }
+    }
+    return 'en';
+  });
 
   const [isFormLoading, setIsFormLoading] = useState(true);
   const [isDonorFormLoading, setIsDonorFormLoading] = useState(true);
@@ -210,7 +290,6 @@ export const GetAQuran = () => {
   const [copiedDonorLink, setCopiedDonorLink] = useState(false);
   const [copiedMissionLink, setCopiedMissionLink] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isFormInView, setIsFormInView] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -223,26 +302,40 @@ export const GetAQuran = () => {
   }, [uiLang]);
 
   useEffect(() => {
-    const target = formSectionRef.current;
-    if (!target || typeof IntersectionObserver === 'undefined') return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsFormInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
+    const syncPageWithHash = () => setCurrentPage(getPageFromHash());
+    window.addEventListener('popstate', syncPageWithHash);
+    window.addEventListener('hashchange', syncPageWithHash);
+    return () => {
+      window.removeEventListener('popstate', syncPageWithHash);
+      window.removeEventListener('hashchange', syncPageWithHash);
+    };
   }, []);
 
   const isUrdu = uiLang === 'ur';
   const t = UI_COPY[uiLang];
+  const requestFormViewUrl = `${REQUEST_FORM_VIEW_URL}?hl=${formLang}`;
+  const requestFormEmbedUrl = `${REQUEST_FORM_VIEW_URL}?embedded=true&hl=${formLang}`;
+  const donorFormViewUrl = `${DONOR_FORM_VIEW_URL}?hl=${formLang}`;
+  const donorFormEmbedUrl = `${DONOR_FORM_VIEW_URL}?embedded=true&hl=${formLang}`;
+
+  const changeFormLanguage = (language) => {
+    setFormLang(language);
+    setIsFormLoading(true);
+    setIsDonorFormLoading(true);
+  };
+
+  const navigateToPage = (page) => {
+    setMobileMenuOpen(false);
+    setCurrentPage(page);
+    const nextHash = page === 'home' ? '#home' : `#${page}`;
+    if (window.location.hash !== nextHash) {
+      window.history.pushState(null, '', nextHash);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const scrollToRequestForm = () => {
-    setMobileMenuOpen(false);
-    formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    navigateToPage('request');
     setHighlightForm(true);
     setTimeout(() => setHighlightForm(false), 1600);
   };
@@ -256,21 +349,21 @@ export const GetAQuran = () => {
 
   const handleCopyFormLink = async () => {
     try {
-      await navigator.clipboard.writeText(REQUEST_FORM_VIEW_URL);
+      await navigator.clipboard.writeText(requestFormViewUrl);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2200);
     } catch {
-      window.open(REQUEST_FORM_VIEW_URL, '_blank', 'noopener,noreferrer');
+      window.open(requestFormViewUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
   const handleCopyDonorFormLink = async () => {
     try {
-      await navigator.clipboard.writeText(DONOR_FORM_VIEW_URL);
+      await navigator.clipboard.writeText(donorFormViewUrl);
       setCopiedDonorLink(true);
       setTimeout(() => setCopiedDonorLink(false), 2200);
     } catch {
-      window.open(DONOR_FORM_VIEW_URL, '_blank', 'noopener,noreferrer');
+      window.open(donorFormViewUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -309,8 +402,11 @@ export const GetAQuran = () => {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3.5 py-3 sm:gap-3 sm:px-6 sm:py-3.5 lg:px-8">
           {/* Brand Logo + Title */}
           <a
-            href="#top"
-            onClick={() => setMobileMenuOpen(false)}
+            href="#home"
+            onClick={(event) => {
+              event.preventDefault();
+              navigateToPage('home');
+            }}
             className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
           >
             <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[#B68635]/60 bg-[#F5F3E8] shadow-sm ring-2 ring-[#134E3A]/10 transition-all group-hover:scale-105 group-hover:ring-[#B68635]/40 sm:h-12 sm:w-12">
@@ -344,6 +440,10 @@ export const GetAQuran = () => {
           <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             <a
               href="#support-mission"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateToPage('support-mission');
+              }}
               className={`hidden font-semibold text-[#57534E] transition-colors hover:text-[#134E3A] md:inline-block ${
                 isUrdu ? 'text-sm leading-normal' : 'text-sm'
               }`}
@@ -353,6 +453,10 @@ export const GetAQuran = () => {
 
             <a
               href="#about-us"
+              onClick={(event) => {
+                event.preventDefault();
+                navigateToPage('about-us');
+              }}
               className={`hidden font-semibold text-[#57534E] transition-colors hover:text-[#134E3A] md:inline-block ${
                 isUrdu ? 'text-sm leading-normal' : 'text-sm'
               }`}
@@ -369,7 +473,10 @@ export const GetAQuran = () => {
             >
               <button
                 type="button"
-                onClick={() => setUiLang('en')}
+                onClick={() => {
+                  setUiLang('en');
+                  changeFormLanguage('en');
+                }}
                 aria-pressed={uiLang === 'en'}
                 className={`rounded-full px-2.5 py-1 font-['Plus_Jakarta_Sans',sans-serif] text-[11px] font-semibold transition-all sm:px-3 sm:text-xs ${
                   uiLang === 'en'
@@ -381,7 +488,10 @@ export const GetAQuran = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setUiLang('ur')}
+                onClick={() => {
+                  setUiLang('ur');
+                  changeFormLanguage('ur');
+                }}
                 aria-pressed={uiLang === 'ur'}
                 className={`rounded-full px-2.5 py-1 font-['Amiri',serif] text-xs font-bold leading-none transition-all sm:px-3 sm:text-sm ${
                   uiLang === 'ur'
@@ -452,7 +562,10 @@ export const GetAQuran = () => {
             <div className="flex flex-col gap-2.5">
               <a
                 href="#support-mission"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateToPage('support-mission');
+                }}
                 className={`rounded-xl px-3 py-2 font-semibold text-[#1C1917] transition-colors hover:bg-[#F3EDE0] ${
                   isUrdu ? 'text-sm leading-loose' : 'text-sm'
                 }`}
@@ -461,12 +574,27 @@ export const GetAQuran = () => {
               </a>
               <a
                 href="#about-us"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateToPage('about-us');
+                }}
                 className={`rounded-xl px-3 py-2 font-semibold text-[#1C1917] transition-colors hover:bg-[#F3EDE0] ${
                   isUrdu ? 'text-sm leading-loose' : 'text-sm'
                 }`}
               >
                 {t.navAbout}
+              </a>
+              <a
+                href="#home"
+                onClick={(event) => {
+                  event.preventDefault();
+                  navigateToPage('home');
+                }}
+                className={`rounded-xl px-3 py-2 font-semibold text-[#1C1917] transition-colors hover:bg-[#F3EDE0] ${
+                  isUrdu ? 'text-sm leading-loose' : 'text-sm'
+                }`}
+              >
+                {t.navHome}
               </a>
               <button
                 type="button"
@@ -491,6 +619,8 @@ export const GetAQuran = () => {
         )}
       </header>
 
+      {currentPage === 'home' && (
+        <>
       {/* Hero Section */}
       <section
         id="top"
@@ -548,7 +678,7 @@ export const GetAQuran = () => {
               {t.heroPrimaryCta}
             </button>
             <a
-              href={REQUEST_FORM_VIEW_URL}
+              href={requestFormViewUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={`inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-[#134E3A] underline-offset-4 hover:underline ${
@@ -605,9 +735,234 @@ export const GetAQuran = () => {
         </div>
       </section>
 
+      <section className="border-b border-[#E5DEC9] py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-12 lg:px-8">
+          <div>
+            <p
+              className={`mb-3 font-semibold text-[#8C6828] ${
+                isUrdu ? 'text-sm leading-loose' : 'text-xs uppercase tracking-widest'
+              }`}
+            >
+              {t.homeOfferBadge}
+            </p>
+            <h2
+              className={`font-bold text-[#134E3A] ${
+                isUrdu
+                  ? 'text-2xl leading-[2.1] sm:text-3xl'
+                  : "font-['Lora',serif] text-2xl tracking-tight sm:text-3xl"
+              }`}
+            >
+              {t.homeOfferHeading}
+            </h2>
+            <p
+              className={`mt-4 text-[#57534E] ${
+                isUrdu ? 'text-sm leading-[2.2] sm:text-base' : 'text-sm leading-relaxed sm:text-base'
+              }`}
+            >
+              {t.homeOfferLead}
+            </p>
+            <ul className="mt-5 space-y-3">
+              {t.homeOfferPoints.map((point) => (
+                <li
+                  key={point}
+                  className={`flex items-start gap-3 text-[#44403C] ${
+                    isUrdu ? 'text-sm leading-[2.1]' : 'text-sm'
+                  }`}
+                >
+                  <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#134E3A] text-[#E6C786]">
+                    <svg
+                      className="h-3 w-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={scrollToRequestForm}
+              className={`mt-7 inline-flex min-h-[46px] items-center justify-center rounded-full bg-[#134E3A] px-6 py-3 font-semibold text-[#FAF7F0] shadow-sm transition-colors hover:bg-[#0E3B2C] ${
+                isUrdu ? 'text-sm leading-loose' : 'text-sm'
+              }`}
+            >
+              {t.heroPrimaryCta}
+            </button>
+          </div>
+
+          <div className="rounded-3xl border border-[#DFD6BE] bg-[#F3EDE0] p-5 shadow-sm sm:p-8">
+            <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+              <div className="relative w-40 shrink-0 rounded-r-2xl rounded-l-md border-2 border-[#B68635] bg-gradient-to-br from-[#165943] via-[#134E3A] to-[#0B3124] p-3.5 text-center text-[#FAF7F0] shadow-xl sm:w-44">
+                <div className="absolute inset-y-0 left-0 w-2.5 border-r border-[#B68635]/50 bg-[#0A291E]" />
+                <div className="rounded-lg border border-[#B68635]/70 p-3">
+                  <p
+                    className={`text-[#E6C786] ${
+                      isUrdu ? 'text-xs leading-relaxed' : 'text-[9px] uppercase tracking-[0.2em]'
+                    }`}
+                  >
+                    {t.bookTopLabel}
+                  </p>
+                  <p
+                    dir="rtl"
+                    className="my-3 font-['Amiri',serif] text-2xl font-bold text-[#F3D999]"
+                  >
+                    القرآن الکریم
+                  </p>
+                  <div className="mx-auto my-2 h-px w-10 bg-[#B68635]" />
+                  <p
+                    className={`mt-2 font-medium text-[#E7E5E4] ${
+                      isUrdu ? 'text-xs leading-loose' : 'text-[11px]'
+                    }`}
+                  >
+                    {t.bookTranslationLabel}
+                  </p>
+                </div>
+              </div>
+              <div className="text-center sm:text-start">
+                <h3
+                  className={`font-bold text-[#1C1917] ${
+                    isUrdu ? 'text-base leading-loose' : "font-['Lora',serif] text-lg"
+                  }`}
+                >
+                  {t.editionTitle}
+                </h3>
+                <p
+                  className={`mt-2 font-semibold text-[#134E3A] ${
+                    isUrdu ? 'text-xs leading-loose' : 'text-xs'
+                  }`}
+                >
+                  {t.editionSize}
+                </p>
+                <p
+                  className={`mt-3 text-[#57534E] ${
+                    isUrdu ? 'text-sm leading-[2.1]' : 'text-sm leading-relaxed'
+                  }`}
+                >
+                  {t.editionDescription}
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 rounded-2xl border border-[#E5DEC9] bg-[#FAF7F0] p-4 text-center">
+              <p
+                className={`mb-1 font-semibold text-[#8C6828] ${
+                  isUrdu ? 'text-xs leading-loose' : 'text-[10px] uppercase tracking-wider'
+                }`}
+              >
+                {t.insideSampleHeader}
+              </p>
+              <p dir="rtl" className="font-['Amiri',serif] text-xl leading-loose text-[#1C1917]">
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ﴿١﴾
+              </p>
+              <p dir="rtl" className="font-['Amiri',serif] text-sm leading-loose text-[#44403C]">
+                شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#F3EDE0]/60 py-12 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2
+              className={`font-bold text-[#134E3A] ${
+                isUrdu
+                  ? 'text-2xl leading-[2.1] sm:text-3xl'
+                  : "font-['Lora',serif] text-2xl tracking-tight sm:text-3xl"
+              }`}
+            >
+              {t.homeProcessHeading}
+            </h2>
+            <p
+              className={`mt-3 text-[#57534E] ${
+                isUrdu ? 'text-sm leading-[2.1]' : 'text-sm leading-relaxed sm:text-base'
+              }`}
+            >
+              {t.homeProcessLead}
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:mt-10 md:grid-cols-3 md:gap-6">
+            {t.homeSteps.map((step, index) => (
+              <article
+                key={step.title}
+                className="rounded-2xl border border-[#DFD6BE] bg-[#FAF7F0] p-5 shadow-sm sm:p-6"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#134E3A] font-['Lora',serif] text-lg font-bold text-[#E6C786]">
+                  {index + 1}
+                </span>
+                <h3
+                  className={`mt-4 font-bold text-[#1C1917] ${
+                    isUrdu ? 'text-base leading-loose' : "font-['Lora',serif] text-lg"
+                  }`}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  className={`mt-2 text-[#57534E] ${
+                    isUrdu ? 'text-sm leading-[2.1]' : 'text-sm leading-relaxed'
+                  }`}
+                >
+                  {step.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-[#E5DEC9] bg-[#134E3A] py-10 text-[#FAF7F0] sm:py-14">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-5 px-4 text-center sm:px-6 md:flex-row md:text-start lg:px-8">
+          <div>
+            <h2
+              className={`font-bold text-[#F3D999] ${
+                isUrdu
+                  ? 'text-xl leading-[2.1] sm:text-2xl'
+                  : "font-['Lora',serif] text-2xl"
+              }`}
+            >
+              {t.homeCtaHeading}
+            </h2>
+            <p
+              className={`mt-1 text-[#E7E5E4] ${
+                isUrdu ? 'text-sm leading-[2.1]' : 'text-sm'
+              }`}
+            >
+              {t.homeCtaLead}
+            </p>
+          </div>
+          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+            <button
+              type="button"
+              onClick={scrollToRequestForm}
+              className={`min-h-[46px] w-full rounded-full bg-[#E6C786] px-6 py-3 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:w-auto ${
+                isUrdu ? 'text-sm leading-loose' : 'text-sm'
+              }`}
+            >
+              {t.heroPrimaryCta}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigateToPage('about-us')}
+              className={`min-h-[46px] w-full rounded-full border border-[#E6C786]/70 px-6 py-3 font-semibold text-[#FAF7F0] transition-colors hover:bg-[#0E3B2C] sm:w-auto ${
+                isUrdu ? 'text-sm leading-loose' : 'text-sm'
+              }`}
+            >
+              {t.homeAboutLink}
+            </button>
+          </div>
+        </div>
+      </section>
+        </>
+      )}
+
       {/* Main Request Section: Mushaf Card + Embedded Quran Request Form */}
-      <main
-        ref={formSectionRef}
+      {currentPage === 'request' && (
+        <main
         id="request-form"
         className="mx-auto max-w-6xl scroll-mt-16 px-4 py-10 sm:px-6 sm:py-16 lg:px-8"
       >
@@ -730,7 +1085,34 @@ export const GetAQuran = () => {
                     </h2>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div
+                      role="group"
+                      aria-label={t.formLanguageLabel}
+                      dir="ltr"
+                      className="inline-flex items-center rounded-full border border-[#D8CCA8] bg-[#F3EDE0] p-0.5"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => changeFormLanguage('en')}
+                        aria-pressed={formLang === 'en'}
+                        className={`rounded-full px-2.5 py-1 font-['Plus_Jakarta_Sans',sans-serif] text-[11px] font-semibold ${
+                          formLang === 'en' ? 'bg-[#FAF7F0] text-[#134E3A] shadow-sm' : 'text-[#57534E]'
+                        }`}
+                      >
+                        English
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => changeFormLanguage('ur')}
+                        aria-pressed={formLang === 'ur'}
+                        className={`rounded-full px-2.5 py-1 font-['Amiri',serif] text-xs font-bold ${
+                          formLang === 'ur' ? 'bg-[#FAF7F0] text-[#134E3A] shadow-sm' : 'text-[#57534E]'
+                        }`}
+                      >
+                        اردو
+                      </button>
+                    </div>
                     <button
                       type="button"
                       onClick={handleCopyFormLink}
@@ -742,7 +1124,7 @@ export const GetAQuran = () => {
                     </button>
 
                     <a
-                      href={REQUEST_FORM_VIEW_URL}
+                      href={requestFormViewUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`inline-flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-full bg-[#E6C786] px-3.5 py-1.5 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:min-h-0 sm:flex-initial ${
@@ -787,7 +1169,7 @@ export const GetAQuran = () => {
                     >
                       {t.loadingFallbackPrefix}{' '}
                       <a
-                        href={REQUEST_FORM_VIEW_URL}
+                        href={requestFormViewUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-semibold text-[#134E3A] underline"
@@ -799,7 +1181,8 @@ export const GetAQuran = () => {
                 )}
 
                 <iframe
-                  src={REQUEST_FORM_EMBED_URL}
+                  key={formLang}
+                  src={requestFormEmbedUrl}
                   title="Get a Quran Request Form"
                   onLoad={() => setIsFormLoading(false)}
                   className="h-[980px] w-full border-0 sm:h-[880px] lg:h-[840px]"
@@ -820,10 +1203,12 @@ export const GetAQuran = () => {
             </div>
           </div>
         </div>
-      </main>
+        </main>
+      )}
 
       {/* Support the Mission / Sadaqah Jariyah + Integrated Donor Form */}
-      <section
+      {currentPage === 'support-mission' && (
+        <section
         id="support-mission"
         className="scroll-mt-16 border-t border-[#E5DEC9] bg-[#F3EDE0]/60 py-12 sm:py-20"
       >
@@ -973,7 +1358,34 @@ export const GetAQuran = () => {
                       </h3>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <div
+                        role="group"
+                        aria-label={t.donorFormLanguageLabel}
+                        dir="ltr"
+                        className="inline-flex items-center rounded-full border border-[#D8CCA8] bg-[#F3EDE0] p-0.5"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => changeFormLanguage('en')}
+                          aria-pressed={formLang === 'en'}
+                          className={`rounded-full px-2.5 py-1 font-['Plus_Jakarta_Sans',sans-serif] text-[11px] font-semibold ${
+                            formLang === 'en' ? 'bg-[#FAF7F0] text-[#134E3A] shadow-sm' : 'text-[#57534E]'
+                          }`}
+                        >
+                          English
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => changeFormLanguage('ur')}
+                          aria-pressed={formLang === 'ur'}
+                          className={`rounded-full px-2.5 py-1 font-['Amiri',serif] text-xs font-bold ${
+                            formLang === 'ur' ? 'bg-[#FAF7F0] text-[#134E3A] shadow-sm' : 'text-[#57534E]'
+                          }`}
+                        >
+                          اردو
+                        </button>
+                      </div>
                       <button
                         type="button"
                         onClick={handleCopyDonorFormLink}
@@ -985,7 +1397,7 @@ export const GetAQuran = () => {
                       </button>
 
                       <a
-                        href={DONOR_FORM_VIEW_URL}
+                        href={donorFormViewUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`inline-flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-full bg-[#E6C786] px-3.5 py-1.5 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:min-h-0 sm:flex-initial ${
@@ -1030,7 +1442,7 @@ export const GetAQuran = () => {
                       >
                         {t.loadingFallbackPrefix}{' '}
                         <a
-                          href={DONOR_FORM_VIEW_URL}
+                          href={donorFormViewUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="font-semibold text-[#134E3A] underline"
@@ -1042,7 +1454,8 @@ export const GetAQuran = () => {
                   )}
 
                   <iframe
-                    src={DONOR_FORM_EMBED_URL}
+                    key={formLang}
+                    src={donorFormEmbedUrl}
                     title="Get a Quran Donor Form"
                     onLoad={() => setIsDonorFormLoading(false)}
                     className="h-[1160px] w-full border-0 sm:h-[1110px] lg:h-[1090px]"
@@ -1064,10 +1477,12 @@ export const GetAQuran = () => {
             </div>
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* About Us Section */}
-      <section
+      {currentPage === 'about-us' && (
+        <section
         id="about-us"
         className="scroll-mt-16 border-t border-[#E5DEC9] bg-gradient-to-b from-[#FAF7F0] to-[#F3EDE0]/80 py-12 sm:py-20"
       >
@@ -1184,7 +1599,8 @@ export const GetAQuran = () => {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="border-t border-[#E5DEC9] bg-[#F3EDE0] py-8 sm:py-10">
@@ -1225,7 +1641,7 @@ export const GetAQuran = () => {
       </footer>
 
       {/* Mobile Floating Bottom CTA (Auto-hides when the Request Form is visible) */}
-      {!isFormInView && (
+      {currentPage === 'home' && (
         <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[#DFD6BE] bg-[#FAF7F0]/95 px-4 py-2.5 backdrop-blur-md sm:hidden">
           <button
             type="button"
