@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import IntroSplash from './components/IntroSplash.jsx';
 
 // Vite serves files in /public directly at the root URL
-const Logo = '/logo.jpg';
+const Logo = '/logo.png';
 const DonateMissionImg = '/donate-mission.jpg';
 
 const REQUEST_FORM_VIEW_URL =
@@ -409,31 +409,14 @@ export const GetAQuran = () => {
             }}
             className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
           >
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[#B68635]/60 bg-[#F5F3E8] shadow-sm ring-2 ring-[#134E3A]/10 transition-all group-hover:scale-105 group-hover:ring-[#B68635]/40 sm:h-12 sm:w-12">
+            <div className="flex h-11 w-32 shrink-0 items-center justify-start overflow-hidden sm:h-12 sm:w-36">
               <img
                 src={Logo}
                 alt={t.brandName}
-                className="h-full w-full origin-top scale-[1.35] object-cover object-top"
+                className="h-full w-full object-contain object-left"
               />
             </div>
-            <div className="min-w-0">
-              <span
-                className={`block truncate font-bold tracking-tight text-[#134E3A] ${
-                  isUrdu
-                    ? 'text-base leading-normal sm:text-lg'
-                    : "font-['Lora',serif] text-lg sm:text-xl"
-                }`}
-              >
-                {t.brandName}
-              </span>
-              <span
-                className={`block font-medium text-[#8C6828] ${
-                  isUrdu ? 'text-xs leading-relaxed' : 'text-[11px] uppercase tracking-widest'
-                }`}
-              >
-                {t.brandTagline}
-              </span>
-            </div>
+            <span className="sr-only">{t.brandName}</span>
           </a>
 
           {/* Navigation Controls */}
@@ -642,7 +625,14 @@ export const GetAQuran = () => {
             }`}
           >
             <span className="h-2 w-2 shrink-0 rounded-full bg-[#134E3A]" />
-            <span>{t.heroBadge}</span>
+            {t.heroBadge.split(' • ').map((part, index) => (
+              <span className="contents" key={part}>
+                {index > 0 && (
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-[#134E3A]" />
+                )}
+                <span>{part}</span>
+              </span>
+            ))}
           </div>
 
           <h1
@@ -1606,11 +1596,11 @@ export const GetAQuran = () => {
       <footer className="border-t border-[#E5DEC9] bg-[#F3EDE0] py-8 sm:py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-start lg:px-8">
           <div className="flex flex-col items-center gap-3 sm:flex-row">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[#B68635]/50 bg-[#F5F3E8] shadow-xs">
+            <div className="flex h-11 w-32 shrink-0 items-center justify-start overflow-hidden">
               <img
                 src={Logo}
                 alt={t.brandName}
-                className="h-full w-full origin-top scale-[1.35] object-cover object-top"
+                className="h-full w-full object-contain object-left"
               />
             </div>
             <div>
