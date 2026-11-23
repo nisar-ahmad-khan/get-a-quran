@@ -390,7 +390,7 @@ export const GetAQuran = () => {
   return (
     <div
       dir={isUrdu ? 'rtl' : 'ltr'}
-      className={`min-h-screen overflow-x-hidden bg-[#FAF7F0] pb-20 text-[#1C1917] selection:bg-[#134E3A] selection:text-[#FAF7F0] sm:pb-0 ${
+      className={`min-h-screen overflow-x-hidden bg-[#FAF7F0] text-[#1C1917] selection:bg-[#134E3A] selection:text-[#FAF7F0] ${
         isUrdu
           ? "font-['Noto_Nastaliq_Urdu','Amiri',serif]"
           : "font-['Plus_Jakarta_Sans',sans-serif]"
@@ -409,7 +409,7 @@ export const GetAQuran = () => {
             }}
             className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
           >
-            <div className="flex h-11 w-32 shrink-0 items-center justify-start overflow-hidden sm:h-12 sm:w-36">
+            <div className="flex h-12 w-36 shrink-0 items-center justify-start bg-transparent sm:h-14 sm:w-40">
               <img
                 src={Logo}
                 alt={t.brandName}
@@ -487,7 +487,7 @@ export const GetAQuran = () => {
             </div>
 
             {/* Desktop / Tablet Primary CTA */}
-            <button
+            {/* <button
               type="button"
               onClick={scrollToRequestForm}
               className={`hidden items-center gap-2 rounded-full bg-[#134E3A] px-4 py-2.5 font-semibold text-[#FAF7F0] shadow-sm transition-all hover:bg-[#0E3B2C] hover:shadow focus:outline-none focus:ring-2 focus:ring-[#B68635] focus:ring-offset-2 focus:ring-offset-[#FAF7F0] sm:inline-flex sm:px-5 ${
@@ -504,7 +504,7 @@ export const GetAQuran = () => {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </button> */}
 
             {/* Mobile Menu Button */}
             <button
@@ -617,7 +617,7 @@ export const GetAQuran = () => {
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </p>
 
-          <div
+          {/* <div
             className={`mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-[#D8CCA8] bg-[#F3EDE0] px-3.5 py-1.5 font-semibold text-[#8C6828] sm:mb-6 sm:px-4 ${
               isUrdu
                 ? 'text-xs leading-loose sm:text-sm'
@@ -633,7 +633,7 @@ export const GetAQuran = () => {
                 <span>{part}</span>
               </span>
             ))}
-          </div>
+          </div> */}
 
           <h1
             className={`font-bold text-[#1C1917] ${
@@ -667,29 +667,6 @@ export const GetAQuran = () => {
             >
               {t.heroPrimaryCta}
             </button>
-            <a
-              href={requestFormViewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex min-h-[44px] items-center gap-1.5 font-semibold text-[#134E3A] underline-offset-4 hover:underline ${
-                isUrdu ? 'text-sm leading-loose' : 'text-xs sm:text-sm'
-              }`}
-            >
-              <span>{t.heroSecondaryCta}</span>
-              <svg
-                className="h-3.5 w-3.5 shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M14 3h7m0 0v7m0-7L10 14M5 7v11a1 1 0 001 1h11"
-                />
-              </svg>
-            </a>
           </div>
         </div>
       </section>
@@ -725,7 +702,7 @@ export const GetAQuran = () => {
         </div>
       </section>
 
-      <section className="border-b border-[#E5DEC9] py-12 sm:py-16 lg:py-20">
+      {/* <section className="border-b border-[#E5DEC9] py-12 sm:py-16 lg:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-12 lg:px-8">
           <div>
             <p
@@ -854,9 +831,9 @@ export const GetAQuran = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="bg-[#F3EDE0]/60 py-12 sm:py-16">
+      <section className="bg-[#FAF7F0]/60 py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2
@@ -905,48 +882,6 @@ export const GetAQuran = () => {
         </div>
       </section>
 
-      <section className="border-t border-[#E5DEC9] bg-[#134E3A] py-10 text-[#FAF7F0] sm:py-14">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-5 px-4 text-center sm:px-6 md:flex-row md:text-start lg:px-8">
-          <div>
-            <h2
-              className={`font-bold text-[#F3D999] ${
-                isUrdu
-                  ? 'text-xl leading-[2.1] sm:text-2xl'
-                  : "font-['Lora',serif] text-2xl"
-              }`}
-            >
-              {t.homeCtaHeading}
-            </h2>
-            <p
-              className={`mt-1 text-[#E7E5E4] ${
-                isUrdu ? 'text-sm leading-[2.1]' : 'text-sm'
-              }`}
-            >
-              {t.homeCtaLead}
-            </p>
-          </div>
-          <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
-            <button
-              type="button"
-              onClick={scrollToRequestForm}
-              className={`min-h-[46px] w-full rounded-full bg-[#E6C786] px-6 py-3 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:w-auto ${
-                isUrdu ? 'text-sm leading-loose' : 'text-sm'
-              }`}
-            >
-              {t.heroPrimaryCta}
-            </button>
-            <button
-              type="button"
-              onClick={() => navigateToPage('about-us')}
-              className={`min-h-[46px] w-full rounded-full border border-[#E6C786]/70 px-6 py-3 font-semibold text-[#FAF7F0] transition-colors hover:bg-[#0E3B2C] sm:w-auto ${
-                isUrdu ? 'text-sm leading-loose' : 'text-sm'
-              }`}
-            >
-              {t.homeAboutLink}
-            </button>
-          </div>
-        </div>
-      </section>
         </>
       )}
 
@@ -1592,67 +1527,78 @@ export const GetAQuran = () => {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-[#E5DEC9] bg-[#F3EDE0] py-8 sm:py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-start lg:px-8">
-          <div className="flex flex-col items-center gap-3 sm:flex-row">
-            <div className="flex h-11 w-32 shrink-0 items-center justify-start overflow-hidden">
-              <img
-                src={Logo}
-                alt={t.brandName}
-                className="h-full w-full object-contain object-left"
-              />
-            </div>
+      {/* Unified Footer */}
+      <footer className="border-t border-[#E6C786]/25 bg-[#134E3A] text-[#FAF7F0]">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 py-8 text-center sm:px-6 md:grid-cols-[220px_minmax(0,1fr)_auto] md:text-start lg:px-8 lg:py-10">
+          <div className="flex h-20 items-center justify-center bg-transparent md:h-24 lg:justify-start">
+            <img
+              src={Logo}
+              alt={t.brandName}
+              className="h-full w-full object-contain object-center lg:object-left"
+            />
+          </div>
+
+          {currentPage === 'home' ? (
             <div>
-              <p
-                className={`font-bold text-[#134E3A] ${
-                  isUrdu ? 'text-base leading-loose' : "font-['Lora',serif] text-base"
+              <h2
+                className={`font-bold text-[#F3D999] ${
+                  isUrdu
+                    ? 'text-xl leading-[2.1] sm:text-2xl'
+                    : "font-['Lora',serif] text-2xl"
                 }`}
               >
-                {t.brandName}
+                {t.homeCtaHeading}
+              </h2>
+              <p
+                className={`mt-1 text-[#E7E5E4] ${
+                  isUrdu ? 'text-sm leading-[2.1]' : 'text-sm'
+                }`}
+              >
+                {t.homeCtaLead}
               </p>
               <p
-                className={`mt-0.5 text-[#57534E] ${
+                className={`mt-3 text-[#E7E5E4] ${
                   isUrdu ? 'text-xs leading-loose' : 'text-xs'
                 }`}
               >
-                {t.footerDesc}
+                {t.footerNote}
               </p>
             </div>
-          </div>
-          <p
-            className={`text-[#78716C] ${
-              isUrdu ? 'text-xs leading-loose' : 'text-xs'
-            }`}
-          >
-            {t.footerNote}
-          </p>
+          ) : (
+            <p
+              className={`text-[#E7E5E4] ${
+                isUrdu ? 'text-sm leading-loose' : 'text-sm'
+              }`}
+            >
+              {t.footerNote}
+            </p>
+          )}
+
+          {currentPage === 'home' && (
+            <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row md:flex-col lg:flex-row">
+              <button
+                type="button"
+                onClick={scrollToRequestForm}
+                className={`min-h-[46px] w-full rounded-full bg-[#E6C786] px-6 py-3 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:w-auto ${
+                  isUrdu ? 'text-sm leading-loose' : 'text-sm'
+                }`}
+              >
+                {t.heroPrimaryCta}
+              </button>
+              <button
+                type="button"
+                onClick={() => navigateToPage('about-us')}
+                className={`min-h-[46px] w-full rounded-full border border-[#E6C786]/70 px-6 py-3 font-semibold text-[#FAF7F0] transition-colors hover:bg-[#0E3B2C] sm:w-auto ${
+                  isUrdu ? 'text-sm leading-loose' : 'text-sm'
+                }`}
+              >
+                {t.homeAboutLink}
+              </button>
+            </div>
+          )}
         </div>
       </footer>
 
-      {/* Mobile Floating Bottom CTA (Auto-hides when the Request Form is visible) */}
-      {currentPage === 'home' && (
-        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-[#DFD6BE] bg-[#FAF7F0]/95 px-4 py-2.5 backdrop-blur-md sm:hidden">
-          <button
-            type="button"
-            onClick={scrollToRequestForm}
-            className={`flex w-full items-center justify-center gap-2 rounded-full bg-[#134E3A] py-3 font-semibold text-[#FAF7F0] shadow-md active:scale-[0.99] ${
-              isUrdu ? 'text-sm leading-normal' : 'text-sm'
-            }`}
-          >
-            <span>{t.heroPrimaryCta}</span>
-            <svg
-              className="h-4 w-4 shrink-0 text-[#E6C786]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-      )}
     </div>
   );
 };
