@@ -579,7 +579,7 @@ export const GetAQuran = () => {
               >
                 {t.navHome}
               </a>
-              <button
+              {/* <button
                 type="button"
                 onClick={scrollToRequestForm}
                 className={`mt-1 flex w-full items-center justify-center gap-2 rounded-full bg-[#134E3A] px-5 py-3 font-semibold text-[#FAF7F0] shadow-sm ${
@@ -596,7 +596,7 @@ export const GetAQuran = () => {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </button> */}
             </div>
           </div>
         )}
