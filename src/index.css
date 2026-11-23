@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  scrollbar-color: #134e3a #f3ede0;
+  scrollbar-color: #b68635 #f3ede0;
   scrollbar-width: thin;
 }
 
@@ -17,11 +17,11 @@
 ::-webkit-scrollbar-thumb {
   border: 2px solid #f3ede0;
   border-radius: 999px;
-  background: #134e3a;
+  background: #b68635;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b68635;
+  background: #134e3a;
 }
 
 ::-webkit-scrollbar-corner {
