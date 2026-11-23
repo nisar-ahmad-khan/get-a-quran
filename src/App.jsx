@@ -610,12 +610,12 @@ export const GetAQuran = () => {
         className="relative overflow-hidden border-b border-[#E5DEC9] py-10 sm:py-16 lg:py-24"
       >
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <p
+          {/* <p
             dir="rtl"
             className="mb-3 font-['Amiri',serif] text-xl text-[#134E3A] sm:mb-4 sm:text-3xl"
           >
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-          </p>
+          </p> */}
 
           {/* <div
             className={`mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-[#D8CCA8] bg-[#F3EDE0] px-3.5 py-1.5 font-semibold text-[#8C6828] sm:mb-6 sm:px-4 ${
