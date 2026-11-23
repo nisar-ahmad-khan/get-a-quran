@@ -1490,28 +1490,6 @@ export const GetAQuran = () => {
             </p>
           )}
 
-          {currentPage === 'home' && (
-            <div className="flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row md:flex-col lg:flex-row">
-              <button
-                type="button"
-                onClick={scrollToRequestForm}
-                className={`min-h-[46px] w-full rounded-full bg-[#E6C786] px-6 py-3 font-bold text-[#134E3A] transition-colors hover:bg-[#F3D999] sm:w-auto ${
-                  isUrdu ? 'text-sm leading-loose' : 'text-sm'
-                }`}
-              >
-                {t.heroPrimaryCta}
-              </button>
-              <button
-                type="button"
-                onClick={() => navigateToPage('about-us')}
-                className={`min-h-[46px] w-full rounded-full border border-[#E6C786]/70 px-6 py-3 font-semibold text-[#FAF7F0] transition-colors hover:bg-[#0E3B2C] sm:w-auto ${
-                  isUrdu ? 'text-sm leading-loose' : 'text-sm'
-                }`}
-              >
-                {t.homeAboutLink}
-              </button>
-            </div>
-          )}
         </div>
       </footer>
 
