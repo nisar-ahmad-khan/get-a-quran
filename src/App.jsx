@@ -672,7 +672,7 @@ export const GetAQuran = () => {
       </section>
 
       {/* Trust & Simplicity Bar */}
-      <section className="border-b border-[#E5DEC9] bg-[#F3EDE0]/70 py-6 sm:py-8">
+      {/* <section className="border-b border-[#E5DEC9] bg-[#F3EDE0]/70 py-6 sm:py-8">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 sm:gap-6 sm:px-6 md:grid-cols-4 lg:px-8">
           {t.trustStats.map((stat, index) => (
             <div
@@ -700,7 +700,7 @@ export const GetAQuran = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* <section className="border-b border-[#E5DEC9] py-12 sm:py-16 lg:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2 md:gap-12 lg:px-8">
@@ -891,93 +891,9 @@ export const GetAQuran = () => {
         id="request-form"
         className="mx-auto max-w-6xl scroll-mt-16 px-4 py-10 sm:px-6 sm:py-16 lg:px-8"
       >
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
+        <div className="flex justify-center items-center gap-8 lg:grid-cols-12 lg:items-start lg:gap-10">
           {/* Left Column: Mushaf Visual & Inside Script Sample */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <div className="rounded-3xl border border-[#DFD6BE] bg-[#F3EDE0] p-5 shadow-sm sm:p-8">
-              {/* Stylized Mushaf Cover Visual */}
-              <div className="mb-5 flex justify-center sm:mb-6">
-                <div className="relative w-48 rounded-r-2xl rounded-l-md border-2 border-[#B68635] bg-gradient-to-br from-[#165943] via-[#134E3A] to-[#0B3124] p-4 text-center text-[#FAF7F0] shadow-xl sm:w-56 sm:p-5">
-                  <div className="absolute inset-y-0 left-0 w-2.5 border-r border-[#B68635]/50 bg-[#0A291E] sm:w-3" />
-
-                  <div className="rounded-lg border border-[#B68635]/70 p-3.5 sm:p-4">
-                    <p
-                      className={`text-[#E6C786] ${
-                        isUrdu
-                          ? 'text-xs leading-relaxed'
-                          : 'text-[9px] uppercase tracking-[0.2em] sm:text-[10px]'
-                      }`}
-                    >
-                      {t.bookTopLabel}
-                    </p>
-                    <p
-                      dir="rtl"
-                      className="my-2.5 font-['Amiri',serif] text-2xl font-bold text-[#F3D999] sm:my-3 sm:text-3xl"
-                    >
-                      القرآن الکریم
-                    </p>
-                    <div className="mx-auto my-2 h-px w-10 bg-[#B68635] sm:w-12" />
-                    <p
-                      className={`mt-2 font-medium text-[#E7E5E4] ${
-                        isUrdu ? 'text-xs leading-loose' : 'text-[11px] sm:text-xs'
-                      }`}
-                    >
-                      {t.bookTranslationLabel}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Edition Details & Inside Page Sample */}
-              <div className="space-y-2.5 border-t border-[#DFD6BE] pt-4 sm:space-y-3 sm:pt-5">
-                <h3
-                  className={`font-bold text-[#1C1917] ${
-                    isUrdu ? 'text-base leading-loose' : "font-['Lora',serif] text-base sm:text-lg"
-                  }`}
-                >
-                  {t.editionTitle}
-                </h3>
-                <p
-                  className={`font-semibold text-[#134E3A] ${
-                    isUrdu ? 'text-xs leading-loose' : 'text-xs'
-                  }`}
-                >
-                  {t.editionSize}
-                </p>
-                <p
-                  className={`text-[#57534E] ${
-                    isUrdu ? 'text-sm leading-[2.1]' : 'text-xs leading-relaxed sm:text-sm'
-                  }`}
-                >
-                  {t.editionDescription}
-                </p>
-
-                <div className="mt-3 rounded-2xl border border-[#E5DEC9] bg-[#FAF7F0] p-3.5 sm:mt-4 sm:p-4">
-                  <p
-                    className={`mb-1 font-semibold text-[#8C6828] ${
-                      isUrdu
-                        ? 'text-xs leading-loose'
-                        : 'text-[10px] uppercase tracking-wider sm:text-[11px]'
-                    }`}
-                  >
-                    {t.insideSampleHeader}
-                  </p>
-                  <p
-                    dir="rtl"
-                    className="font-['Amiri',serif] text-lg leading-loose text-[#1C1917] sm:text-xl"
-                  >
-                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ﴿١﴾
-                  </p>
-                  <p
-                    dir="rtl"
-                    className="mt-1 font-['Amiri',serif] text-sm leading-loose text-[#44403C] sm:text-base"
-                  >
-                    شروع اللہ کے نام سے جو بڑا مہربان نہایت رحم والا ہے
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        
 
           {/* Right Column: Integrated Request Google Form Card */}
           <div className="lg:col-span-7">
